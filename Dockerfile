@@ -1,6 +1,8 @@
 # syntax=docker/dockerfile:1
 
-FROM debian:bookworm-slim AS fetch
+# Upstream release binaries are built on ubuntu-latest (glibc 2.39).
+# Debian bookworm (glibc 2.36) cannot run them.
+FROM ubuntu:24.04 AS fetch
 
 ARG MENTISDB_VERSION=0.10.4.49
 ARG TARGETARCH
@@ -24,16 +26,18 @@ RUN set -eux; \
     echo "${SHA256}  mentisdb" | sha256sum -c -; \
     chmod +x mentisdb
 
-FROM debian:bookworm-slim
+FROM ubuntu:24.04
 
 LABEL org.opencontainers.image.authors="Richard Freeman <rich@rich0.org>"
 LABEL org.opencontainers.image.source=https://github.com/rich0/mentisdb-contain
+
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         ca-certificates \
         curl \
-        libasound2 \
+        libasound2t64 \
         tini \
     && rm -rf /var/lib/apt/lists/* \
     && useradd --system --uid 1000 --home-dir /data --shell /usr/sbin/nologin mentisdb
