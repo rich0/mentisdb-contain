@@ -1,0 +1,9 @@
+*~
+*.swp
+*.swo
+.*.swp
+.DS_Store
+Thumbs.db
+.env
+.env.*
+.fastembed_cache/
