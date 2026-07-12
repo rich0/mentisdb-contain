@@ -4,7 +4,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "${SCRIPT_DIR}"
 
-IMAGE="${IMAGE:-ghcr.io/rich0/mentisdb}"
+IMAGE="${IMAGE:-registry.rich0.org/public/mentisdb}"
 VERSION="${MENTISDB_VERSION:-$(tr -d '[:space:]' < VERSION)}"
 PLATFORMS="${PLATFORMS:-linux/amd64}"
 NO_CACHE="${NO_CACHE:-}"
@@ -44,7 +44,7 @@ else
 
   echo "Pushing ${TAG_VERSION}"
   if ! docker push "${TAG_VERSION}"; then
-    echo "error: push failed — run: docker login ghcr.io" >&2
+    echo "error: push failed — run: docker login registry.rich0.org" >&2
     exit 1
   fi
 
@@ -67,5 +67,5 @@ if [[ -n "${DIGEST}" ]]; then
   echo "${TAG_VERSION}@${DIGEST}"
 else
   echo "${TAG_VERSION}"
-  echo "(digest unavailable; re-run after push or inspect in ghcr.io)"
+  echo "(digest unavailable; re-run after push or inspect on registry.rich0.org)"
 fi
