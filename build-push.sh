@@ -7,7 +7,7 @@ cd "${SCRIPT_DIR}"
 IMAGE="${IMAGE:-registry.rich0.org/public/mentisdb}"
 VERSION="${MENTISDB_VERSION:-$(tr -d '[:space:]' < VERSION)}"
 PLATFORMS="${PLATFORMS:-linux/amd64}"
-NO_CACHE="${NO_CACHE:-}"
+NO_CACHE="${NO_CACHE:-1}"
 
 if ! command -v docker >/dev/null 2>&1; then
   echo "error: docker is not installed or not on PATH" >&2
