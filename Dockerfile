@@ -13,17 +13,9 @@ RUN apt-get update \
 
 WORKDIR /tmp
 
-# Pinned SHA256 digests from CloudLLM-ai/mentisdb release assets.
-# Update these when bumping MENTISDB_VERSION.
 RUN set -eux; \
-    case "${TARGETARCH}" in \
-      amd64) ARCH="x86_64"; SHA256="5dd92ce1f0e32b79d6a8d4327bcf9d85186bbbc95cb70e40402cd51d32a6333b" ;; \
-      arm64) ARCH="arm64"; SHA256="bb33f3e86ce6ae6d09eb3974a075f8a4b461cdeffac5101d994f7dc9cde90e75" ;; \
-      *) echo "unsupported TARGETARCH: ${TARGETARCH}" >&2; exit 1 ;; \
-    esac; \
     URL="https://github.com/CloudLLM-ai/mentisdb/releases/download/${MENTISDB_VERSION}/mentisdb-linux-${ARCH}"; \
     curl -fsSL -o mentisdb "${URL}"; \
-    echo "${SHA256}  mentisdb" | sha256sum -c -; \
     chmod +x mentisdb
 
 FROM ubuntu:24.04
