@@ -14,6 +14,11 @@ RUN apt-get update \
 WORKDIR /tmp
 
 RUN set -eux; \
+    case "${TARGETARCH}" in \
+      amd64) ARCH="x86_64" ;; \
+      arm64) ARCH="arm64" ;; \
+      *) echo "unsupported TARGETARCH: ${TARGETARCH}" >&2; exit 1 ;; \
+    esac; \
     URL="https://github.com/CloudLLM-ai/mentisdb/releases/download/${MENTISDB_VERSION}/mentisdb-linux-${ARCH}"; \
     curl -fsSL -o mentisdb "${URL}"; \
     chmod +x mentisdb
