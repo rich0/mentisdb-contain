@@ -10,7 +10,7 @@ CloudLLM-ai.
 
 - Registry: `registry.rich0.org/public/mentisdb` (Zot, public anonymous pull)
 - Version pin: `VERSION` file (passed as `MENTISDB_VERSION` build-arg)
-- Base: `ubuntu:24.04` (matches upstream glibc)
+- Base: `ubuntu:26.04` (glibc 2.43; required by upstream binaries since 0.11)
 - Ports: `9471` (MCP), `9472` (REST), `9473`–`9474`, `9475` (dashboard)
 - Data: volume `/data`
 
@@ -19,7 +19,7 @@ CloudLLM-ai.
 ```bash
 docker pull registry.rich0.org/public/mentisdb:latest
 # or pin a version
-docker pull registry.rich0.org/public/mentisdb:0.10.4.49
+docker pull registry.rich0.org/public/mentisdb:0.11.0.56
 ```
 
 Public pulls do not require login.

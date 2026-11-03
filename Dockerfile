@@ -1,10 +1,12 @@
 # syntax=docker/dockerfile:1
 
-# Upstream release binaries are built on ubuntu-latest (glibc 2.39).
-# Debian bookworm (glibc 2.36) cannot run them.
-FROM ubuntu:24.04 AS fetch
+# Upstream release binaries from 0.11.0.56 onward are linked against glibc 2.43.
+# libm symbols (remainderf, asinf, acosf, sinhf, coshf, acoshf, atanhf) are
+# versioned GLIBC_2.43. Ubuntu 24.04 ships glibc 2.39 and the dynamic linker
+# refuses to start those binaries. Ubuntu 26.04 ships glibc 2.43.
+FROM ubuntu:26.04 AS fetch
 
-ARG MENTISDB_VERSION=0.10.4.49
+ARG MENTISDB_VERSION=0.11.0.56
 ARG TARGETARCH
 
 RUN apt-get update \
@@ -23,7 +25,7 @@ RUN set -eux; \
     curl -fsSL -o mentisdb "${URL}"; \
     chmod +x mentisdb
 
-FROM ubuntu:24.04
+FROM ubuntu:26.04
 
 LABEL org.opencontainers.image.authors="Richard Freeman <rich@rich0.org>"
 LABEL org.opencontainers.image.source=https://github.com/rich0/mentisdb-contain
