@@ -5,21 +5,26 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "${SCRIPT_DIR}"
 
 IMAGE="${IMAGE:-registry.rich0.org/public/mentisdb}"
-VERSION="${MENTISDB_VERSION:-$(tr -d '[:space:]' < VERSION)}"
 PLATFORMS="${PLATFORMS:-linux/amd64}"
 NO_CACHE="${NO_CACHE:-1}"
+
+if [[ ! -f VERSION ]]; then
+  echo "error: VERSION is missing" >&2
+  exit 1
+fi
+
+VERSION="$(tr -d '[:space:]' < VERSION)"
+if [[ -z "${VERSION}" ]]; then
+  echo "error: VERSION is empty" >&2
+  exit 1
+fi
 
 if ! command -v docker >/dev/null 2>&1; then
   echo "error: docker is not installed or not on PATH" >&2
   exit 1
 fi
 
-if [[ -z "${VERSION}" ]]; then
-  echo "error: VERSION file is empty and MENTISDB_VERSION is unset" >&2
-  exit 1
-fi
-
-BUILD_ARGS=(--pull --build-arg "MENTISDB_VERSION=${VERSION}")
+BUILD_ARGS=(--pull)
 if [[ "${NO_CACHE}" == "1" ]]; then
   BUILD_ARGS+=(--no-cache)
 fi

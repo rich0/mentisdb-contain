@@ -9,8 +9,8 @@ CloudLLM-ai.
 ## Image
 
 - Registry: `registry.rich0.org/public/mentisdb` (Zot, public anonymous pull)
-- Version pin: `VERSION` file (passed as `MENTISDB_VERSION` build-arg)
-- Base: `ubuntu:26.04` (glibc 2.43; required by upstream binaries since 0.11)
+- Version pin: `VERSION`. The image tag and the upstream binary both come from that file. The build fails if it is missing or empty.
+- Base: `ubuntu:26.04` (glibc 2.43, required by the upstream binaries)
 - Ports: `9471` (MCP), `9472` (REST), `9473`–`9474`, `9475` (dashboard)
 - Data: volume `/data`
 
@@ -18,8 +18,6 @@ CloudLLM-ai.
 
 ```bash
 docker pull registry.rich0.org/public/mentisdb:latest
-# or pin a version
-docker pull registry.rich0.org/public/mentisdb:0.11.0.56
 ```
 
 Public pulls do not require login.
@@ -31,6 +29,5 @@ docker login registry.rich0.org -u ci-push -p '<password>'
 ./build-push.sh
 ```
 
-Pins `MENTISDB_VERSION` from `VERSION` and publishes to
-`registry.rich0.org/public/mentisdb` (`:<version>` and `:latest`). Override with
-`IMAGE=...` or `MENTISDB_VERSION=...` if needed.
+Reads `VERSION` and publishes to `registry.rich0.org/public/mentisdb`
+(`:<version>` and `:latest`). Override the repository with `IMAGE=...` if needed.

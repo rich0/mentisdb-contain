@@ -1,6 +1,42 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "config:recommended",
+    "docker:pinDigests"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "MentisDB upstream release pin in the VERSION file",
+      "managerFilePatterns": [
+        "/^VERSION$/"
+      ],
+      "matchStrings": [
+        "^(?<currentValue>\\d+\\.\\d+\\.\\d+\\.\\d+)\\s*$"
+      ],
+      "depNameTemplate": "CloudLLM-ai/mentisdb",
+      "packageNameTemplate": "CloudLLM-ai/mentisdb",
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)\\.(?<build>\\d+)$"
+    }
+  ],
+  "packageRules": [
+    {
+      "description": "MentisDB binary releases are four-part tags. This excludes pymentisdb-* releases, which do not ship the linux binaries this image downloads.",
+      "matchDatasources": ["github-releases"],
+      "matchPackageNames": ["CloudLLM-ai/mentisdb"],
+      "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)\\.(?<build>\\d+)$",
+      "allowedVersions": "/^\\d+\\.\\d+\\.\\d+\\.\\d+$/"
+    },
+    {
+      "description": "Ubuntu 26.04 (resolute) apt repositories for pinned Dockerfile packages. Version strings match on amd64 and arm64; lookups use the amd64 indexes, including updates and security.",
+      "matchDatasources": ["deb"],
+      "matchFileNames": ["Dockerfile"],
+      "registryUrls": [
+        "https://archive.ubuntu.com/ubuntu?suite=resolute&components=main,universe&binaryArch=amd64",
+        "https://archive.ubuntu.com/ubuntu?suite=resolute-updates&components=main,universe&binaryArch=amd64",
+        "https://security.ubuntu.com/ubuntu?suite=resolute-security&components=main,universe&binaryArch=amd64"
+      ]
+    }
   ]
 }
