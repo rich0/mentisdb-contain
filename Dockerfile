@@ -1,10 +1,10 @@
-# syntax=docker/dockerfile:1
+# syntax=docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
 
 # Upstream release binaries are linked against glibc 2.43.
 # libm symbols (remainderf, asinf, acosf, sinhf, coshf, acoshf, atanhf) are
 # versioned GLIBC_2.43. Ubuntu 24.04 ships glibc 2.39 and the dynamic linker
 # refuses to start those binaries. Ubuntu 26.04 ships glibc 2.43.
-FROM ubuntu:26.04 AS fetch
+FROM ubuntu:26.04@sha256:6a06111c3b0a8600feadb270aec771dc239bf407b25625f93f44ab00e11f4d3c AS fetch
 
 ARG TARGETARCH
 
@@ -35,7 +35,7 @@ RUN set -eux; \
     chmod +x mentisdb; \
     rm -f /tmp/VERSION
 
-FROM ubuntu:26.04
+FROM ubuntu:26.04@sha256:6a06111c3b0a8600feadb270aec771dc239bf407b25625f93f44ab00e11f4d3c
 
 LABEL org.opencontainers.image.authors="Richard Freeman <rich@rich0.org>"
 LABEL org.opencontainers.image.source=https://github.com/rich0/mentisdb-contain
