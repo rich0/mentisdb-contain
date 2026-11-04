@@ -6,7 +6,7 @@ cd "${SCRIPT_DIR}"
 
 IMAGE="${IMAGE:-registry.rich0.org/public/mentisdb}"
 PLATFORMS="${PLATFORMS:-linux/amd64}"
-NO_CACHE="${NO_CACHE:-1}"
+NO_CACHE="${NO_CACHE:-0}"
 
 if [[ ! -f VERSION ]]; then
   echo "error: VERSION is missing" >&2
