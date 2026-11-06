@@ -11,7 +11,7 @@ ARG TARGETARCH
 # Package versions are pinned so Renovate can track them. Suites are in renovate.json.
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        ca-certificates=20260816ubuntu0.26.04.1 \
+        ca-certificates=20260816ubuntu0.26.04.2 \
         curl=8.18.0-1ubuntu2.8 \
     && rm -rf /var/lib/apt/lists/*
 
@@ -45,7 +45,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Package versions are pinned so Renovate can track them. Suites are in renovate.json.
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        ca-certificates=20260816ubuntu0.26.04.1 \
+        ca-certificates=20260816ubuntu0.26.04.2 \
         curl=8.18.0-1ubuntu2.8 \
         libasound2t64=1.2.15.3-1ubuntu1.1 \
         tini=0.19.0-6 \
