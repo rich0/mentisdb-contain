@@ -4,7 +4,7 @@
 # libm symbols (remainderf, asinf, acosf, sinhf, coshf, acoshf, atanhf) are
 # versioned GLIBC_2.43. Ubuntu 24.04 ships glibc 2.39 and the dynamic linker
 # refuses to start those binaries. Ubuntu 26.04 ships glibc 2.43.
-FROM ubuntu:26.04@sha256:065aa8626841f16057b78b027b464cd59c4fac36c204c72dcbf48d66f5fa8a96 AS fetch
+FROM ubuntu:26.04@sha256:d66b366dac61b575bee2aef07e9c26e8070096fbe84a3d4d3eb0da069b5d76db AS fetch
 
 ARG TARGETARCH
 
@@ -35,7 +35,7 @@ RUN set -eux; \
     chmod +x mentisdb; \
     rm -f /tmp/VERSION
 
-FROM ubuntu:26.04@sha256:065aa8626841f16057b78b027b464cd59c4fac36c204c72dcbf48d66f5fa8a96
+FROM ubuntu:26.04@sha256:d66b366dac61b575bee2aef07e9c26e8070096fbe84a3d4d3eb0da069b5d76db
 
 LABEL org.opencontainers.image.authors="Richard Freeman <rich@rich0.org>"
 LABEL org.opencontainers.image.source=https://github.com/rich0/mentisdb-contain
