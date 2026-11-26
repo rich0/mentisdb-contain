@@ -47,7 +47,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         ca-certificates=20260816ubuntu0.26.04.2 \
         curl=8.18.0-1ubuntu2.8 \
-        libasound2t64=1.2.15.3-1ubuntu1.1 \
+        libasound2t64=1.2.15.3-1ubuntu1.2 \
         tini=0.19.0-6 \
     && rm -rf /var/lib/apt/lists/* \
     && userdel -r ubuntu 2>/dev/null || userdel ubuntu \
